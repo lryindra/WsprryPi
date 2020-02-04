@@ -1,0 +1,17 @@
+Issue #1
+Add #include <sys/sysmacros.h> in mailbox.c before #include <sys/mman.h>
+About the warnings in STL libraries -check (https://email.hostaccount.com/owa/redir.aspx?C=opPOyfZKmU2tYDoX4zf9rtkcULX7rtcIAO1yBdebZQo0CrtVXAiARLbio3KyqjHowKbGXOmOagE.&URL=https%3a%2f%2fstackoverflow.com%2fquestions%2f48149323)
+suggest adding -Wno-psabi to CXXFLAGS in project's makefile
+
+Issue #2:
+We did some troubleshooting after trying to run WsprryPi on a Raspberry Pi 4.
+Two issues:
+makefile does not correctly identify the Pi version
+Both the Pi3B and Pi4 identified the same ARMV7l
+No configuration for PI4 clock changes and base address.
+makefile I used needs to be edited to properly set PI-VERSION
+The RPi 4 requires 2 changes in gpioclk
+#define BCM2708_PERI_BASE 0xfe000000
+#define F_PLLD_CLK (750000000.0)
+This meant adding RPI4 option in the 'makefile' and changes to use this new setting in both gpioclk.cpp and wspr.cpp.
+
